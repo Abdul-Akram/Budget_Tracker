@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget_Counter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            background-color: #e9ecef;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .head {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .head h2 {
+            font-weight: bold;
+            color: #495057;
+            font-size: 1.5rem;
+        }
+
+        .entries {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .in_section1 {
+            flex: 1;
+        }
+
+        .in_section1 p {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .in_section2 {
+            display: flex;
+            gap: 1rem;
+            flex: 2;
+        }
+
+        .in_section2 div {
+            flex: 1;
+        }
+
+        .in_section2 p {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .add {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #1abc32;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add:hover {
+            background-color: #0056b3;
+        }
+
+        .lower table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #dee2e6;
+            color: #495057;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        td button {
+            padding: 0.3rem 0.6rem;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        td button:hover {
+            background-color: #c82333;
+        }
+
+        .error {
+            color: #dc3545;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="head"><h2>Budger_Tracker</h2></div>
+        <div class="upper">
+            <div class="entries">
+                <div class="in_section1">
+                    <p id="Type">Type</p>
+                    <select name="options" id="options">
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+                <div class="in_section2">
+                    <div class="in1">
+                        <p>Name:</p>
+                        <input type="text" name="name" id="name">
+                    </div>
+                    <div class="in2">
+                        <p>Amount:</p>
+                        <input type="number" name="amount" id="amount">
+                    </div>
+                </div>
+            </div>
+            <button class="add" onclick="add()">Add To</button>
+            <div class="error"></div>
+        </div>
+        <div class="lower">
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Options</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        function add(){
+            const type = document.getElementById("options").value;
+            const name = document.getElementById("name").value;
+            const amount = document.getElementById("amount").value;
+            if(type!=="" && name!=="" && amount!==""){
+                const table = document.querySelector("table");
+                const row = document.createElement("tr");
+                const typecell = document.createElement("td");
+                const namecell = document.createElement("td");
+                const amountcell = document.createElement("td");
+                const optioncell = document.createElement("td");
+                typecell.innerText=type;
+                row.appendChild(typecell);
+                namecell.innerText=name;
+                row.appendChild(namecell);
+                amountcell.innerText=amount;
+                row.appendChild(amountcell);
+                optioncell.innerHTML='<button onclick="removeItem(this)">Remove</button>';
+                row.appendChild(optioncell);
+                table.appendChild(row);
+            } else {
+                document.querySelector(".error").innerHTML="<p>⚠️ Please Fill all the fields</p>";
+            }
+        }
+
+        function removeItem(button) {
+            const remove = button.parentNode.parentNode;
+            remove.parentNode.removeChild(remove);
+        }
+    </script>
+</body>
+</html>
